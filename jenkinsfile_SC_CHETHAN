@@ -1,0 +1,95 @@
+pipeline {
+    agent any
+    
+    tools{
+        jdk 'jdk11'
+        maven 'maven3'
+        jfrog 'jfrog'
+    }
+    
+    environment{
+        SCANNER_HOME= tool 'sonar-scanner'
+        DOCKER_IMAGE_NAME = "chethanrishab.jfrog.io/docker-local/hello-frog:1.0.0"
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git changelog: false, poll: false, url: 'https://github.com/chethandivya/secretsanta-generator.git'
+            }
+        }
+        
+        stage('Compile') {
+            steps {
+                sh "mvn clean compile"
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+               sh "mvn test"
+            }
+        }
+        
+       
+        stage('Sonar Analysis') {
+            steps {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://http://20.235.252.82:9000/ -Dsonar.login=squ_eb17674e59d2a04cf2a2f60fe346cfe024d065c0 -Dsonar.projectName=secret-santa \
+                      -Dsonar.java.binaries=. \
+                      -Dsonar.projectKey=secret-santa '''
+            }
+        }
+        
+        stage('Build') {
+            steps {
+               sh "mvn clean install"
+            }
+        }
+        
+        stage('Docker Build & Tag') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: '335a1d1d-c96d-4bca-a63e-72c9129ae3d1', toolName: 'docker') {
+                        
+                        sh "docker build -t  santa1 . "
+                        //sh "docker tag santa1 chethanrishab/santa1:latest"
+                        //sh "docker push chethanrishab/santa1:latest"
+                    }
+                }
+            }
+        }
+        
+        stage('Docker push')
+        {
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'chethanrishab') {
+                        sh 'docker tag santa fisdemo.jfrog.io/secretsanta-docker/santa:${BUILD_NUMBER}'
+                        //sh 'docker push chocky/gamutkart:${BUILD_NUMBER}'
+                    }
+                }
+            }
+        }
+        stage('Push image to Artifactory'){
+            steps{
+                rtDockerPush(
+                    serverId: "jfrog",
+                    image: "fisdemo.jfrog.io/secretsanta-docker/santa:${BUILD_NUMBER}",
+                    targetRepo: 'secretsanta-docker',
+                    properties: 'project-name=example; status=stale')
+            }
+        }
+        /*stage('Docker Deploy To Container') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: '335a1d1d-c96d-4bca-a63e-72c9129ae3d1', toolName: 'docker') {
+                        sh "docker run -d --name santa1 -p 8080:8080 chethanrishab/santa1:latest"
+                    }
+                }
+            }
+        }*/
+        
+        
+        
+	}
+}
