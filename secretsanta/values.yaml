@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: https://fisdemo.jfrog.io/artifactory/secretsanta-docker/santa/40/
+  repository: chethanrishab/santa1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -40,8 +40,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 8080
 
 ingress:
   enabled: false
