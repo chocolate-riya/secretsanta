@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: chethanrishab/santa1
+  repository: chethanrishab/santa9
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
