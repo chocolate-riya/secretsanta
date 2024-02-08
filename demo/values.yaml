@@ -5,10 +5,10 @@
 replicaCount: 2
 
 image:
-  repository: fisdemo.jfrog.io/
+  repository: fisdemo.jfrog.io/secretsanta-docker-local/santa
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "43"
 
 imagePullSecrets:
 - name: jfrogsanta
