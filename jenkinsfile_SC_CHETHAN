@@ -79,6 +79,12 @@ pipeline {
                     properties: 'project-name=example; status=stale')
             }
         }
+        stage('Trivy Scan') {
+            steps {
+               sh "trivy image fisdemo.jfrog.io/secretsanta-docker/santa:${BUILD_NUMBER}"
+            }
+        }
+
         /*stage('Docker Deploy To Container') {
             steps {
                 script{
