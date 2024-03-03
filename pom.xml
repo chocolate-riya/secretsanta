@@ -88,6 +88,11 @@
                                 <groupId>org.flywaydb</groupId>
                                 <artifactId>flyway-maven-plugin</artifactId>
                                 <version>10.8.1</version>
+				<configuration>
+               				 <url>jdbc:mysql://localhost:3306/flywaydb</url>
+               				 <user>admin</user>
+               				 <password>admin</password>
+				</configuration>
                         </plugin>
 			<plugin>
 				<groupId>mysql</groupId>
