@@ -71,14 +71,6 @@
    			 <version>8.0.31</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.mysql.jdbc/com.springsource.com.mysql.jdbc -->
-		<dependency>
-   			 <groupId>com.mysql.jdbc</groupId>
-   			 <artifactId>com.springsource.com.mysql.jdbc</artifactId>
-    			<version>5.1.6</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>
@@ -98,9 +90,9 @@
                                 <version>10.8.1</version>
                         </plugin>
 			<plugin>
-				<groupId>com.mysql.jdbc</groupId>
-   				<artifactId>com.springsource.com.mysql.jdbc</artifactId>
-    				<version>5.1.6</version>
+				<groupId>mysql</groupId>
+    				<artifactId>mysql-connector-java</artifactId>
+   			 	<version>8.0.31</version>
 			</plugin>
 		</plugins>
 	</build>
