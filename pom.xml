@@ -92,6 +92,7 @@
                				 <url>jdbc:mysql://10.0.0.5:3306/flywaydb</url>
                				 <user>admin</user>
                				 <password>admin</password>
+					 <configFiles>src/main/flyway.conf</configFiles>
 				</configuration>
                         </plugin>
 			<plugin>
