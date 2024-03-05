@@ -89,10 +89,7 @@
                                 <artifactId>flyway-maven-plugin</artifactId>
                                 <version>10.8.1</version>
 				<configuration>
-               				 <url>jdbc:mysql://localhost:3306/flywaydb</url>
-               				 <user>admin</user>
-               				 <password>admin</password>
-					 <configFiles>src/main/flyway.conf</configFiles>
+               				 <configFiles>src/main/flyway.conf</configFiles>
 				</configuration>
                         </plugin>
 			<plugin>
